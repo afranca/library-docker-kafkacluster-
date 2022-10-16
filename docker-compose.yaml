@@ -34,5 +34,18 @@ services:
       - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka2:9092,EXTERNAL://localhost:9094      
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
     depends_on:
-      - zookeeper         
-   
+      - zookeeper    
+  producer1:
+    image: 'library-events-producer:1.1'
+    ports:
+      - '8080:8080'
+    depends_on:
+      - kafka1
+      - kafka2
+  consumer1:
+    image: 'library-events-consumer:1.0'
+    ports:
+      - '8080'
+    depends_on:
+      - kafka1
+      - kafka2      
